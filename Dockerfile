@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY server.py .
 COPY homelab.py .
+COPY mbta.py .
 COPY notify.py .
 COPY search.py .
 COPY top4.json .
