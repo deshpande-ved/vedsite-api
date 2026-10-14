@@ -53,7 +53,7 @@ def _upcoming(cfg):
         "filter[route]": cfg["route"],
         "sort": "departure_time",
     })
-    mins = {0: [], 1: []}
+    trains = {0: [], 1: []}
     for p in preds:
         a = p["attributes"]
         if a.get("schedule_relationship") in ("CANCELLED", "SKIPPED"):
@@ -61,12 +61,15 @@ def _upcoming(cfg):
         t = a.get("departure_time") or a.get("arrival_time")
         if not t:
             continue
-        m = int((datetime.fromisoformat(t) - now).total_seconds() // 60)
+        at = datetime.fromisoformat(t)  # MBTA sends local ET offset
+        m = int((at - now).total_seconds() // 60)
         d = a["direction_id"]
-        if m >= 0 and len(mins[d]) < PER_DIR:
-            mins[d].append(m)
+        if m >= 0 and len(trains[d]) < PER_DIR:
+            trains[d].append((m, at.strftime("%-I:%M")))
     dests = _destinations(cfg["route"])
-    return [{"dest": dests[d], "mins": mins[d]} for d in (0, 1)]
+    return [{"dest": dests[d],
+             "mins": [m for m, _ in trains[d]],
+             "times": [s for _, s in trains[d]]} for d in (0, 1)]
 
 
 def _build():
