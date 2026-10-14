@@ -1,0 +1,17 @@
+services:
+  vedsite-api:
+    build: .
+    container_name: vedsite-api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - /home/ved/vedsite_secrets:/app/secrets
+      - ./data:/app/data
+    env_file:
+      - /home/ved/vedsite_secrets/.env
+    environment:
+      - SEARCH_DATA_DIR=/app/data
+      - SPOTIFY_TOKENS_FILE=/app/secrets/spotify_tokens.json
+    extra_hosts:
+      - "ssh-portfolio-relay.polecat-nominal.ts.net:100.84.140.29"
