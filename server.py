@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 
 import notify
 from homelab import homelab_bp
+from mbta import mbta_bp
 from search import search_bp, set_spotify_token_getter
 
 load_dotenv()  # Load environment variables from .env file
@@ -30,6 +31,7 @@ def after_request(response):
     return response
 
 app.register_blueprint(homelab_bp)
+app.register_blueprint(mbta_bp)
 app.register_blueprint(search_bp)
 
 # CONFIGURATION - Your API credentials
