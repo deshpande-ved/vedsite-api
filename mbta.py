@@ -14,6 +14,7 @@ API = "https://api-v3.mbta.com"
 KEY = os.environ.get("MBTA_API_KEY", "")
 STATIONS = {
     "mfa": {"stop": "place-mfa", "route": "Green-E", "name": "MFA", "line": "Green Line E"},
+    "northeastern": {"stop": "place-nuniv", "route": "Green-E", "name": "NEU", "line": "Green Line E"},
     "fenway": {"stop": "place-fenwy", "route": "Green-D", "name": "Fenway", "line": "Green Line D"},
     "ruggles": {"stop": "place-rugg", "route": "Orange", "name": "Ruggles", "line": "Orange Line"},
 }
